@@ -62,8 +62,16 @@ find_package(Eigen3 REQUIRED)
 find_package(PCL REQUIRED)
 find_package (GeographicLib REQUIRED)
 
-find_package( GTSAMCMakeTools )
-find_package(GTSAM REQUIRED QUIET)
+# find_package( GTSAMCMakeTools )
+# find_package(GTSAM REQUIRED QUIET)
+set(3RDPARTY_DIR /home/ys/ZJ_ROBOT/3rdparty)	            # 需要更改为对应库安装路径
+set(GTSAM_DIR ${3RDPARTY_DIR}/gtsam-4.2a8/lib/cmake/GTSAM)  # 其他版本更换版本名称即可
+find_package(GTSAM)
+if(GTSAM_FOUND)
+  message(STATUS "Found GTSAM ${GTSAM_VERSION}")
+else()
+  message(STATUS "GTSAM Not Found")
+endif()
 
 message(Eigen: ${EIGEN3_INCLUDE_DIR})
 
@@ -100,7 +108,7 @@ generate_messages(
 
 catkin_package(
   CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy std_msgs message_runtime
-  DEPENDS EIGEN3 PCL GTSAM
+  DEPENDS EIGEN3 PCL
   INCLUDE_DIRS
 )
 
